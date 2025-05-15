@@ -42,8 +42,8 @@
 			let queue = [];
 			for (let i = 0; i < entries.length; i++) {
 				let inputs = entries[i].split("|");
-				if (inputs.length === 3) {
-					queue.push({ name: inputs[0], purpose: inputs[1], idnum: inputs[2] });
+				if (inputs.length === 4) {
+					queue.push({ name: inputs[0], purpose: inputs[1], idnum: inputs[2], timestamp: inputs[3] });
 				}
 			}
 			return queue;
@@ -53,7 +53,7 @@
 		//creates a string for each item and stores it
 			let result = "";
 			for (let i = 0; i < queue.length; i++) {
-				result += queue[i].name + "|" + queue[i].purpose + "|" + queue[i].idnum;
+				result += queue[i].name + "|" + queue[i].purpose + "|" + queue[i].idnum + "|" + queue[i].timestamp;
 				if (i !== queue.length - 1) result += "||";
 			}
 			localStorage.setItem("queue", result);
@@ -71,13 +71,20 @@
 				return;
 			}
 			
+			//gets the date and time
+			var d = new Date();
+			let time = ((d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear() + " " +
+				d.getHours().toString().padStart(2, '0') + ':' +
+				d.getMinutes().toString().padStart(2, '0') + ':' +
+				d.getSeconds().toString().padStart(2, '0'));
+			
 			//saves in local storage
 			localStorage.setItem("customer", name);
 			localStorage.setItem("thepurpose", purpose);
 			localStorage.setItem("number", idnum);
 
 			let queue = getQueue();
-			queue.push({ name: name, purpose: purpose, idnum: idnum });
+			queue.push({ name: name, purpose: purpose, idnum: idnum, timestamp: time });
 			saveQueue(queue);
 			addName();
 		}
@@ -94,11 +101,11 @@
 			document.getElementById("QUEUE").innerHTML = qtext;
 			
 			//queue for admin panel (with buttons)
-			let atext = "";
+			let atext = "<ol>";
 			for (let i = 0; i < queue.length; i++){
-				atext += queue[i].name + " (" + queue[i].idnum + ") - " + queue[i].purpose + " " +
+				atext += "<li>" + queue[i].name + " (" + queue[i].idnum + ") - " + queue[i].purpose + " " + " | TIME: " + queue[i].timestamp +
 					'ㅤ<input type="button" class = "servebutton" onclick="serve(' + i + ')" value="Serve">' +
-					'ㅤ<input type="button" class = "servebutton" onclick="serve(' + i + ')" value="Remove"><br />';
+					'ㅤ<input type="button" class = "servebutton" onclick="serve(' + i + ')" value="Remove"></li><br>';
 			}
 			document.getElementById("ADMIN").innerHTML = atext;
 			
