@@ -4,28 +4,35 @@
 	<meta charset="UTF-8">
 	<title>Canteen Queue Form</title>
 	<link rel="stylesheet" href="styles.css">
+	<link rel="icon" href="logo.png" type="image/gif">
 </head>
 <body>
-
-	<h1>Canteen Queue Registration Form</h1>
-	<hr>
-	<h2>Join the Queue</h2>
-	<form>
-		<input type="text" id="name" placeholder="Name" required>
-		<input type="text" id="purpose" placeholder="Purpose" required>
-		<input type="text" id="id" placeholder="ID Number" required>
-		<input type="button" value="Join Queue" onclick="storeName()">
-	</form>
-	<hr>
-	<div>
-		<h2>Current Queue</h2>
-		<h3 id="QUEUE"></h3>
-	</div><br>
-	<div>
-		<h2>Admin Panel</h2>
-		<div id="ADMIN"></div>
+	<div class="header">
+		<h1>ㅤ<img src="logo.png" alt="logo" height=60 width=60 style="vertical-align: middle;"> Canteen Queue Registration Form</h1><br>
 	</div>
-
+	<br><br>
+	<div class="container">
+		<form>
+			<h2>Join the Queue</h2>
+				<h3><label for="name">Name: </label></h3>
+				<input type="text" id="name" placeholder="Last Name" required><br>
+				<h3><label for="purpose">Purpose: </label></h3>
+				<input type="text" id="purpose" placeholder="Purpose" required><br>
+				<h3><label for="id">ID Number: </label></h3>
+				<input type="text" id="id" placeholder="##-####-###" required><br><br>
+				<input type="button" value="Join Queue" onclick="storeName()">
+		</form>
+		<hr>
+		<div class="DIV">
+			<h2>Current Queue</h2>
+			<h3 id="QUEUE"></h3>
+		</div>
+		<hr>
+		<div class="DIV">
+			<h2>Admin Panel</h2>
+			<div id="ADMIN" class="DIV"></div>
+		</div>
+	</div><br>
 	<script>
 		function getQueue(){
 		//retrieves and analyzes the data 
@@ -74,7 +81,7 @@
 			saveQueue(queue);
 			addName();
 		}
-
+		
 		function addName() {
 			let queue = getQueue();
 			
@@ -90,8 +97,8 @@
 			let atext = "";
 			for (let i = 0; i < queue.length; i++){
 				atext += queue[i].name + " (" + queue[i].idnum + ") - " + queue[i].purpose + " " +
-					'<input type="button" class = "servebutton" onclick="serve(' + i + ')" value="Serve">' +
-					'<input type="button" class = "servebutton" onclick="serve(' + i + ')" value="Remove"><br />';
+					'ㅤ<input type="button" class = "servebutton" onclick="serve(' + i + ')" value="Serve">' +
+					'ㅤ<input type="button" class = "servebutton" onclick="serve(' + i + ')" value="Remove"><br />';
 			}
 			document.getElementById("ADMIN").innerHTML = atext;
 			
